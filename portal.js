@@ -10,6 +10,7 @@ function origenPortal(texto){
 }
 if(typeof module!=='undefined')module.exports={codigoPersonal,origenPortal};
 if(typeof document!=='undefined'){
+ const ingreso=document.getElementById('ingresar');ingreso.addEventListener('click',()=>{if(origen)location.assign(origen+'/ingresar')});
  const input=document.getElementById('codigo'),estado=document.getElementById('estado'),boton=document.getElementById('entrar');let origen='';
  // El fragmento no se envía a GitHub; se retira antes de cargar la configuración.
  const codigoHash=codigoPersonal(location.hash.slice(1));
@@ -19,6 +20,6 @@ if(typeof document!=='undefined'){
  fetch('config.json',{cache:'no-store',credentials:'omit'}).then(r=>{if(!r.ok)throw Error();return r.json()}).then(c=>{
   origen=c.disponible===true?origenPortal(c.portal):'';
   if(!origen){estado.textContent='El acceso por internet está en preparación. Mesa de Partes te avisará cuando esté habilitado.';return}
-  boton.disabled=false;estado.textContent='Usa tu acceso personal para continuar.';if(codigoHash)entrar(codigoHash);
+  boton.disabled=false;ingreso.disabled=false;estado.textContent='Usa tu acceso personal para continuar.';if(codigoHash)entrar(codigoHash);
  }).catch(()=>{estado.textContent='No se pudo comprobar el acceso. Vuelve a intentarlo en unos minutos.'});
 }
